@@ -5,7 +5,6 @@ import (
 	member_app "taejai/internal/member/app"
 	member_domain "taejai/internal/member/domain"
 	shared_app "taejai/internal/shared/app"
-	"taejai/internal/shared/value_object"
 	"testing"
 
 	member_domain_event "taejai/internal/member/domain/event"
@@ -23,7 +22,7 @@ func TestRegisterUseCase_Register_success_with_published_event(t *testing.T) {
 		member_domain_event.IndividualMemberRegisteredEvent{MemberId: member_domain.MemberId(1)},
 	).Return(nil)
 
-	address, err := value_object.NewAddress(
+	address, err := member_domain.NewAddress(
 		"123/456",
 		"Bangkok",
 		"10110",

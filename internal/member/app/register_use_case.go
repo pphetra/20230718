@@ -4,7 +4,6 @@ import (
 	member_domain "taejai/internal/member/domain"
 	member_domain_event "taejai/internal/member/domain/event"
 	shared_app "taejai/internal/shared/app"
-	value_object "taejai/internal/shared/value_object"
 )
 
 func RegisterIndividualMember(
@@ -20,7 +19,7 @@ func RegisterIndividualMember(
 		memberRepository := store.GetRepository("member").(member_domain.MemberRepository)
 
 		// what is the error handling strategy here?
-		address, err := value_object.NewAddress(
+		address, err := member_domain.NewAddress(
 			addressLine1,
 			addressLine2,
 			addressPostalCode,

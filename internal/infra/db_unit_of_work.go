@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	member_infra "taejai/internal/member/infra"
 	shared_app "taejai/internal/shared/app"
-	"taejai/internal/shared/value_object"
+	shared_domain "taejai/internal/shared/domain"
 )
 
 type DBUnitOfWorkStore struct {
@@ -52,8 +52,8 @@ func (u *DBUnitOfWork) DoInTransaction(txFunc shared_app.TxFunc) (interface{}, e
 
 	store := &DBUnitOfWorkStore{tx: tx}
 
-	events := []value_object.DomainEvent{}
-	publishFunc := func(event value_object.DomainEvent) error {
+	events := []shared_domain.DomainEvent{}
+	publishFunc := func(event shared_domain.DomainEvent) error {
 		events = append(events, event)
 		return nil
 	}

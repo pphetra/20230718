@@ -4,7 +4,6 @@ import (
 	member_domain "taejai/internal/member/domain"
 	member_domain_event "taejai/internal/member/domain/event"
 	shared_app "taejai/internal/shared/app"
-	"taejai/internal/shared/value_object"
 )
 
 type RegisterIndividualCommand struct {
@@ -24,7 +23,7 @@ func (c RegisterIndividualCommand) Execute(store shared_app.UnitOfWorkStore, pub
 	memberRepository := store.GetRepository("member").(member_domain.MemberRepository)
 
 	// what is the error handling strategy here?
-	address, err := value_object.NewAddress(
+	address, err := member_domain.NewAddress(
 		c.addressLine1,
 		c.addressLine2,
 		c.addressPostalCode,

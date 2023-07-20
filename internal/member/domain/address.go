@@ -1,4 +1,4 @@
-package value_object
+package member_domain
 
 type Address struct {
 	Line1      string

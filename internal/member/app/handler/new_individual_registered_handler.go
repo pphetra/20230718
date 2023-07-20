@@ -4,13 +4,13 @@ import (
 	member_app "taejai/internal/member/app"
 	member_domain_event "taejai/internal/member/domain/event"
 	shared_app "taejai/internal/shared/app"
-	"taejai/internal/shared/value_object"
+	shared_domain "taejai/internal/shared/domain"
 )
 
 type IndividualMemberRegisteredHandler struct {
 }
 
-func (h IndividualMemberRegisteredHandler) Handle(dispatcher *shared_app.CommandDispatcher, event value_object.DomainEvent) error {
+func (h IndividualMemberRegisteredHandler) Handle(dispatcher *shared_app.CommandDispatcher, event shared_domain.DomainEvent) error {
 	// TODO
 	// dispatcher.Dispatch(sendGreetingEmailCommand)
 	imrEvent := event.(member_domain_event.IndividualMemberRegisteredEvent)
@@ -26,7 +26,7 @@ func (h IndividualMemberRegisteredHandler) Handle(dispatcher *shared_app.Command
 	return nil
 }
 
-func (h IndividualMemberRegisteredHandler) ParseEvent(payload []byte) (value_object.DomainEvent, error) {
+func (h IndividualMemberRegisteredHandler) ParseEvent(payload []byte) (shared_domain.DomainEvent, error) {
 	// parse payload to event
 	return member_domain_event.NewIndividualMemberRegisteredEventFromJsonBytes(payload)
 }

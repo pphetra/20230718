@@ -1,15 +1,17 @@
 package shared_app
 
-import "taejai/internal/shared/value_object"
+import (
+	shared_domain "taejai/internal/shared/domain"
+)
 
-type PublishEvent func(event value_object.DomainEvent) error
+type PublishEvent func(event shared_domain.DomainEvent) error
 
 type EventBus interface {
-	Publish(event value_object.DomainEvent) error
+	Publish(event shared_domain.DomainEvent) error
 	RegisterHandler(eventName string, handler EventHandler) error
 }
 
 type EventHandler interface {
-	Handle(dispatcher *CommandDispatcher, event value_object.DomainEvent) error
-	ParseEvent(payload []byte) (value_object.DomainEvent, error)
+	Handle(dispatcher *CommandDispatcher, event shared_domain.DomainEvent) error
+	ParseEvent(payload []byte) (shared_domain.DomainEvent, error)
 }

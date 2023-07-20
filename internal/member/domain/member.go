@@ -1,9 +1,5 @@
 package member_domain
 
-import (
-	value_object "taejai/internal/shared/value_object"
-)
-
 type MemberType int
 
 const (
@@ -18,13 +14,13 @@ type Member struct {
 	Name1   string
 	Name2   string
 	Type    MemberType
-	Address value_object.Address
+	Address Address
 }
 
 func NewIndividualMember(
 	firstName string,
 	lastName string,
-	address value_object.Address,
+	address Address,
 ) (Member, error) {
 	return Member{
 		Name1:   firstName,

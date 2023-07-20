@@ -1,7 +1,7 @@
 package shared_app
 
 import (
-	"taejai/internal/shared/value_object"
+	shared_domain "taejai/internal/shared/domain"
 
 	"github.com/stretchr/testify/mock"
 )
@@ -15,7 +15,7 @@ func (m *MockUnitOfWork) GetRepository(key string) interface{} {
 	return args.Get(0)
 }
 
-func (m *MockUnitOfWork) Publish(event value_object.DomainEvent) error {
+func (m *MockUnitOfWork) Publish(event shared_domain.DomainEvent) error {
 	args := m.Called(event)
 	return args.Error(0)
 }

@@ -3,7 +3,7 @@ package infra
 import (
 	"context"
 	"sync"
-	"taejai/internal/shared/value_object"
+	shared_domain "taejai/internal/shared/domain"
 
 	shared_app "taejai/internal/shared/app"
 
@@ -46,7 +46,7 @@ func NewGoChannelEventBus(options ...GoChannelEventBusOption) *GoChannelEventBus
 	return &instance
 }
 
-func (b *GoChannelEventBus) Publish(event value_object.DomainEvent) error {
+func (b *GoChannelEventBus) Publish(event shared_domain.DomainEvent) error {
 	msg := message.NewMessage(watermill.NewUUID(), event.GetPayload())
 	msg.Metadata.Set("event_name", event.GetName())
 	// all events go to the same topic

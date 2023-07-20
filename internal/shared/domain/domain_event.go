@@ -1,4 +1,4 @@
-package value_object
+package shared_domain
 
 type DomainEvent interface {
 	GetName() string

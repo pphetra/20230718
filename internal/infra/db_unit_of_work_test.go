@@ -5,7 +5,6 @@ import (
 	"taejai/internal/infra"
 	member_domain "taejai/internal/member/domain"
 	shared_app "taejai/internal/shared/app"
-	"taejai/internal/shared/value_object"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -37,7 +36,7 @@ func TestPostgresUnitOfWork_DoInTransaction(t *testing.T) {
 
 	result, err := uow.DoInTransaction(func(store shared_app.UnitOfWorkStore, publish shared_app.PublishEvent) (interface{}, error) {
 		memberRepo := store.GetRepository("member").(member_domain.MemberRepository)
-		address, err := value_object.NewAddress(
+		address, err := member_domain.NewAddress(
 			"123/456",
 			"Bangkok",
 			"10110",
@@ -85,7 +84,7 @@ func TestPostgresUnitOfWork_DoInTransaction_Rollback(t *testing.T) {
 
 	_, err = uow.DoInTransaction(func(store shared_app.UnitOfWorkStore, publish shared_app.PublishEvent) (interface{}, error) {
 		memberRepo := store.GetRepository("member").(member_domain.MemberRepository)
-		address, err := value_object.NewAddress(
+		address, err := member_domain.NewAddress(
 			"123/456",
 			"Bangkok",
 			"10110",
