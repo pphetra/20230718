@@ -2,7 +2,7 @@ package member_app
 
 import (
 	member_domain "taejai/internal/member/domain"
-	member_domain_event "taejai/internal/member/domain/event"
+	member_domain_events "taejai/internal/member/domain/events"
 	shared_app "taejai/internal/shared/app"
 )
 
@@ -43,7 +43,7 @@ func RegisterIndividualMember(
 		}
 
 		// publish RegisteredEvent
-		publish(member_domain_event.NewIndividualMemberRegisteredEvent(id))
+		publish(member_domain_events.NewIndividualMemberRegisteredEvent(id))
 
 		return id, err
 	})

@@ -7,7 +7,7 @@ import (
 	shared_app "taejai/internal/shared/app"
 	"testing"
 
-	member_domain_event "taejai/internal/member/domain/event"
+	member_domain_events "taejai/internal/member/domain/events"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -19,7 +19,7 @@ func TestRegisterUseCase_Register_success_with_published_event(t *testing.T) {
 
 	mockUOW.On("GetRepository", "member").Return(mockRepository)
 	mockUOW.On("Publish",
-		member_domain_event.IndividualMemberRegisteredEvent{MemberId: member_domain.MemberId(1)},
+		member_domain_events.IndividualMemberRegisteredEvent{MemberId: member_domain.MemberId(1)},
 	).Return(nil)
 
 	address, err := member_domain.NewAddress(
