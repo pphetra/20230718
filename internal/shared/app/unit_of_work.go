@@ -1,12 +1,9 @@
 package shared_app
 
-import "taejai/internal/shared/value_object"
+type TxFunc func(UnitOfWorkStore, PublishEvent) (interface{}, error)
 
-type PublishEvent func(value_object.DomainEvent) error
-
-type TxFunc func(UnitOfWorkRepositoryStore, PublishEvent) (interface{}, error)
-
-type UnitOfWorkRepositoryStore interface {
+// hold all repositories and external services
+type UnitOfWorkStore interface {
 	GetRepository(key string) interface{}
 }
 

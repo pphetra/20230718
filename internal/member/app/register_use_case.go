@@ -15,7 +15,7 @@ func RegisterIndividualMember(
 	addressLine2 string,
 	addressPostalCode string,
 ) (member_domain.MemberId, error) {
-	id, err := unitOfWork.DoInTransaction(func(store shared_app.UnitOfWorkRepositoryStore, publish shared_app.PublishEvent) (interface{}, error) {
+	id, err := unitOfWork.DoInTransaction(func(store shared_app.UnitOfWorkStore, publish shared_app.PublishEvent) (interface{}, error) {
 		// why not memberRepo := store.GetMemberRepository()?
 		memberRepository := store.GetRepository("member").(member_domain.MemberRepository)
 

@@ -7,11 +7,11 @@ import (
 	"taejai/internal/shared/value_object"
 )
 
-type PostgresUnitOfWorkRepositoryStore struct {
+type DBUnitOfWorkStore struct {
 	tx *sql.Tx
 }
 
-func (s *PostgresUnitOfWorkRepositoryStore) GetRepository(key string) interface{} {
+func (s *DBUnitOfWorkStore) GetRepository(key string) interface{} {
 	switch key {
 	case "member":
 		repo := member_infra.NewMemberRepository(s.tx)
@@ -21,21 +21,21 @@ func (s *PostgresUnitOfWorkRepositoryStore) GetRepository(key string) interface{
 	}
 }
 
-type PostgresUnitOfWork struct {
+type DBUnitOfWork struct {
 	db       *sql.DB
 	eventBus shared_app.EventBus
 }
 
-type PostgresUnitOfWorkOption func(*PostgresUnitOfWork)
+type DBUnitOfWorkOption func(*DBUnitOfWork)
 
-func WithEventBus(eventBus shared_app.EventBus) func(*PostgresUnitOfWork) {
-	return func(u *PostgresUnitOfWork) {
+func WithEventBus(eventBus shared_app.EventBus) func(*DBUnitOfWork) {
+	return func(u *DBUnitOfWork) {
 		u.eventBus = eventBus
 	}
 }
 
-func NewPostgresUnitOfWork(db *sql.DB, options ...PostgresUnitOfWorkOption) *PostgresUnitOfWork {
-	uow := &PostgresUnitOfWork{db: db}
+func NewDBUnitOfWork(db *sql.DB, options ...DBUnitOfWorkOption) *DBUnitOfWork {
+	uow := &DBUnitOfWork{db: db}
 
 	for _, option := range options {
 		option(uow)
@@ -44,13 +44,13 @@ func NewPostgresUnitOfWork(db *sql.DB, options ...PostgresUnitOfWorkOption) *Pos
 	return uow
 }
 
-func (u *PostgresUnitOfWork) DoInTransaction(txFunc shared_app.TxFunc) (interface{}, error) {
+func (u *DBUnitOfWork) DoInTransaction(txFunc shared_app.TxFunc) (interface{}, error) {
 	tx, err := u.db.Begin()
 	if err != nil {
 		return nil, err
 	}
 
-	store := &PostgresUnitOfWorkRepositoryStore{tx: tx}
+	store := &DBUnitOfWorkStore{tx: tx}
 
 	events := []value_object.DomainEvent{}
 	publishFunc := func(event value_object.DomainEvent) error {
